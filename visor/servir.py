@@ -105,6 +105,15 @@ def main():
 
     # Puerto fijo 8765 para que relanzar conserve la URL; si está ocupado,
     # el sistema asigna uno libre.
+    # En Windows hay que desactivar allow_reuse_address (SO_REUSEADDR, activo
+    # por defecto en los servidores de http.server): ahí permite ligarse a un
+    # puerto que otro proceso ya tiene abierto, así que un segundo visor no
+    # recibiría el OSError esperado y le ROBARÍA el 8765 al primero (dos
+    # sesiones en paralelo = solo se ve la última). Sin él, el segundo visor
+    # cae al puerto aleatorio, que es el comportamiento buscado. En Linux y
+    # macOS no aplica: un puerto en escucha no se puede robar.
+    if os.name == "nt":
+        http.server.ThreadingHTTPServer.allow_reuse_address = False
     estado = {"ultimo": time.time()}
     try:
         servidor = http.server.ThreadingHTTPServer(("127.0.0.1", 8765), hacer_handler(ruta_datos, estado))
