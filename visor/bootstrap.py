@@ -496,6 +496,9 @@ def generar_ci():
         "    runs-on: ubuntu-latest\n"
         "    steps:\n"
         "      - uses: actions/checkout@v4\n"
+        "      - run: |\n"
+        "          git config --global user.name \"CI\"\n"
+        "          git config --global user.email \"ci@localhost\"\n"
         "      - run: python3 docs/00-metodo/scripts/lint_metodo.py\n"
     )
 

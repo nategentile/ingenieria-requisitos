@@ -4,6 +4,14 @@ La versión del método viaja con cada proyecto (en su `METODO.json`). Para llev
 estas mejoras a tus proyectos ya creados: abre tu agente aquí y dile «pon al día
 mis proyectos».
 
+## 1.1.2 — 2026-08-06
+
+- **El CI que se reparte a tus proyectos ya no fallaba solo. ** La comprobación
+  del método exige que git tenga identidad configurada, pero el propio
+  workflow de GitHub Actions que este método instala nunca la configuraba:
+  cualquier proyecto actualizado a 1.1.1 veía su CI en rojo desde el primer
+  `push`. Ahora el workflow configura una identidad de CI antes de lintar.
+
 ## 1.1.1 — 2026-08-05
 
 - **Actualizar ya no se bloquea por trabajo a medias.** Si un proyecto tiene
